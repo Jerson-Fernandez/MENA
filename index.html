@@ -625,7 +625,7 @@
             <h2 class="section-title">Resumen del Día</h2>
             <div class="stats-grid">
                 <div class="stat-item">
-                    <div class="stat-value" id="totalPaid">$0</div>
+                    <div class="stat-value" id="totalPaid">S/0</div>
                     <div class="stat-label">Total Recibido</div>
                 </div>
                 <div class="stat-item">
@@ -633,11 +633,11 @@
                     <div class="stat-label">Clientes que Pagaron</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value" id="totalCash">$0</div>
+                    <div class="stat-value" id="totalCash">S/0</div>
                     <div class="stat-label">💵 Efectivo</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value" id="totalYape">$0</div>
+                    <div class="stat-value" id="totalYape">S/0</div>
                     <div class="stat-label">📱 Yape</div>
                 </div>
             </div>
@@ -1086,10 +1086,10 @@
                 .filter(p => p.method === 'yape')
                 .reduce((sum, p) => sum + p.amount, 0);
 
-            document.getElementById('totalPaid').textContent = `$${total.toFixed(2)}`;
+            document.getElementById('totalPaid').textContent = `S/${total.toFixed(2)}`;
             document.getElementById('clientsPaid').textContent = uniqueClients;
-            document.getElementById('totalCash').textContent = `$${cashTotal.toFixed(2)}`;
-            document.getElementById('totalYape').textContent = `$${yapeTotal.toFixed(2)}`;
+            document.getElementById('totalCash').textContent = `S/${cashTotal.toFixed(2)}`;
+            document.getElementById('totalYape').textContent = `S/${yapeTotal.toFixed(2)}`;
         }
 
         // Actualizar lista de clientes
@@ -1124,7 +1124,7 @@
                                 ${client.name}
                                 <span class="frequency-badge ${freqClass}">${client.frequency}</span>
                             </div>
-                            ${hasPaid ? `<small>Pagó: $${totalPaid.toFixed(2)}</small>` : ''}
+                            ${hasPaid ? `<small>Pagó: S/${totalPaid.toFixed(2)}</small>` : ''}
                         </div>
                         <div>
                             <span class="client-status ${hasPaid ? 'status-paid' : 'status-pending'}">
@@ -1163,10 +1163,10 @@
                             </div>
                             <div class="payment-details">
                                 <span>${payment.note || 'Sin nota'}</span>
-                                <span class="payment-amount">$${payment.amount.toFixed(2)}</span>
+                                <span class="payment-amount">S/${payment.amount.toFixed(2)}</span>
                             </div>
                             <div class="payment-details">
-                                <span>${new Date(payment.timestamp).toLocaleTimeString()}</span>
+                                <span>${new Date(payment.timestamp).toLocaleTimeString('es-PE', {timeZone: 'America/Lima'})}</span>
                                 <button class="btn-danger" onclick="deletePayment('${payment.id}')">Eliminar</button>
                             </div>
                         </div>
@@ -1356,7 +1356,7 @@
                 }
             }
             
-            alert(`Cliente: ${client.name}\nID: ${client.id}\nTeléfono: ${client.phone || 'No registrado'}\nFecha de desembolso: ${client.disbursementDate ? new Date(client.disbursementDate).toLocaleDateString('es-PE') : 'N/A'}\nFrecuencia: ${client.frequency || 'N/A'}\nPróximo pago: ${nextPaymentDate}\n\nTotal pagado (histórico): $${totalPaid.toFixed(2)}\nNúmero de pagos: ${clientPayments.length}`);
+            alert(`Cliente: ${client.name}\nID: ${client.id}\nTeléfono: ${client.phone || 'No registrado'}\nFecha de desembolso: ${client.disbursementDate ? new Date(client.disbursementDate).toLocaleDateString('es-PE') : 'N/A'}\nFrecuencia: ${client.frequency || 'N/A'}\nPróximo pago: ${nextPaymentDate}\n\nTotal pagado (histórico): S/${totalPaid.toFixed(2)}\nNúmero de pagos: ${clientPayments.length}`);
         }
 
         // Event listener para cambio de fecha
