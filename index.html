@@ -577,32 +577,31 @@
             }
         }
 
-        /* Dark mode support for Android */
-        @media (prefers-color-scheme: dark) {
-            body {
-                background-color: #121212;
-                color: #ffffff;
-            }
-            
-            .stats-card,
-            .client-list,
-            .payment-history,
-            .date-filter,
-            .modal-content {
-                background: #1e1e1e;
-                color: #ffffff;
-            }
-            
-            .form-input {
-                background: #2d2d2d;
-                border-color: #404040;
-                color: #ffffff;
-            }
-            
-            .form-input:focus {
-                background: #2d2d2d;
-                border-color: #667eea;
-            }
+        /* Forzar modo claro siempre */
+        body {
+            background-color: #f5f5f5 !important;
+            color: #333 !important;
+        }
+        
+        .stats-card,
+        .client-list,
+        .payment-history,
+        .date-filter,
+        .modal-content {
+            background: white !important;
+            color: #333 !important;
+        }
+        
+        .form-input {
+            background: #fafafa !important;
+            border-color: #e0e0e0 !important;
+            color: #333 !important;
+        }
+        
+        .form-input:focus {
+            background: white !important;
+            border-color: #667eea !important;
+            color: #333 !important;
         }
     </style>
 </head>
