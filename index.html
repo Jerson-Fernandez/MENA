@@ -1056,10 +1056,11 @@
             localStorage.setItem('payments_MENA', JSON.stringify(payments));
         }
 
-        // Establecer fecha de hoy
+        // Establecer fecha de hoy (hora de Perú)
         function setToday() {
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('dateFilter').value = today;
+            // Obtener la fecha actual en zona horaria de Perú
+            const peruDate = new Date().toLocaleDateString('en-CA', {timeZone: 'America/Lima'});
+            document.getElementById('dateFilter').value = peruDate;
             updateDisplay();
         }
 
