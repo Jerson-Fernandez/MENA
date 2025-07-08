@@ -1,10 +1,10 @@
-const CACHE_NAME = 'control-pagos-v1';
+const CACHE_NAME = 'control-pagos-v2';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/icon-192.png',
-  '/icon-512.png'
+  './',
+  './index.html',
+  './manifest.json',
+  './icon-192.png',
+  './icon-512.png'
 ];
 
 // Instalar Service Worker
@@ -47,7 +47,7 @@ self.addEventListener('fetch', event => {
       })
       .catch(() => {
         // Si falla todo, devuelve la página principal
-        return caches.match('/index.html');
+        return caches.match('./index.html');
       })
   );
 });
