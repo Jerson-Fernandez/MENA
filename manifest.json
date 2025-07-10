@@ -1,25 +1,45 @@
 {
   "name": "Control de Pagos Diarios",
   "short_name": "Control Pagos",
-  "description": "Aplicación para controlar pagos diarios de clientes",
-  "start_url": "./index.html",
-  "scope": "./",
-  "display": "standalone",
+  "description": "Aplicación para el control de pagos diarios de clientes",
   "theme_color": "#667eea",
   "background_color": "#f5f5f5",
+  "display": "standalone",
   "orientation": "portrait",
+  "scope": "/",
+  "start_url": "/",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "icon-512.png",
+      "src": "/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "finance", "productivity"],
+  "lang": "es-PE",
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "Agregar Cliente",
+      "short_name": "Nuevo Cliente",
+      "description": "Agregar un nuevo cliente",
+      "url": "/?action=add-client",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Registrar Pago",
+      "short_name": "Nuevo Pago",
+      "description": "Registrar un nuevo pago",
+      "url": "/?action=add-payment",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     }
   ]
 }
