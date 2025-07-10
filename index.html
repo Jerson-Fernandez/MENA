@@ -9,6 +9,8 @@
 <meta name="application-name" content="Control Pagos">
 <meta name="format-detection" content="telephone=no">
 <meta name="msapplication-tap-highlight" content="no">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/icon-192.png">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{font-family:'Roboto',-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background-color:#f5f5f5;color:#333;min-height:100vh;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
@@ -118,11 +120,25 @@ body{background-color:#f5f5f5!important;color:#333!important}
 .stats-card,.client-list,.payment-history,.date-filter,.modal-content,.general-search-container{background:white!important;color:#333!important}
 .form-input{background:#fafafa!important;border-color:#e0e0e0!important;color:#333!important}
 .form-input:focus{background:white!important;border-color:#667eea!important;color:#333!important}
+.install-banner{display:none;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;padding:16px;margin:16px;border-radius:12px;box-shadow:0 4px 12px rgba(102,126,234,0.3);align-items:center;gap:12px}
+.install-banner.show{display:flex}
+.install-banner-text{flex:1}
+.install-banner-text h3{font-size:16px;margin-bottom:4px}
+.install-banner-text p{font-size:14px;opacity:0.9}
+.btn-install{background:white;color:#667eea;padding:10px 20px;border:none;border-radius:8px;font-weight:600;cursor:pointer;white-space:nowrap}
+.btn-install:active{transform:scale(0.95)}
 </style>
 </head>
 <body>
 <div class="header"><h1>Control de Pagos</h1></div>
 <div class="container">
+<div id="installBanner" class="install-banner">
+<div class="install-banner-text">
+<h3>Instalar Control de Pagos</h3>
+<p>Accede rápido desde tu pantalla de inicio</p>
+</div>
+<button class="btn-install" onclick="installPWA()">Instalar</button>
+</div>
 <div class="date-filter">
 <div><label for="dateFilter" class="form-label">Fecha:</label><input type="date" id="dateFilter" class="form-input" style="width:auto;"></div>
 <button class="btn-secondary" onclick="setToday()">Hoy</button>
@@ -206,7 +222,7 @@ body{background-color:#f5f5f5!important;color:#333!important}
 </div>
 </div>
 <script>
-let clients=[];let payments=[];
+let clients=[];let payments=[];let deferredPrompt;
 function getPeruvianDate(date=new Date()){const peruTime=new Date(date.toLocaleString("en-US",{timeZone:"America/Lima"}));return peruTime;}
 function getPeruvianDateString(date=new Date()){const options={timeZone:'America/Lima',year:'numeric',month:'2-digit',day:'2-digit'};const peruDateStr=date.toLocaleDateString('en-CA',options);return peruDateStr;}
 function getPeruvianISOString(date=new Date()){return new Date(date.toLocaleString("en-US",{timeZone:"America/Lima"})).toISOString();}
@@ -248,6 +264,10 @@ function showPaymentSchedule(clientId){const client=clients.find(c=>c.id===clien
 function showEditClientModal(clientId){const client=clients.find(c=>c.id===clientId);if(!client)return;document.getElementById('editClientId').value=client.id;document.getElementById('editClientName').value=client.name;document.getElementById('editClientPhone').value=client.phone||'';document.getElementById('editClientDisbursementDate').value=client.disbursementDate||'';document.getElementById('editClientFrequency').value=client.frequency||'';document.getElementById('editClientQuota').value=client.quota||'';document.getElementById('editClientTerm').value=client.term||'';showModal('editClientModal');}
 function updateClient(event){event.preventDefault();const clientId=document.getElementById('editClientId').value;const client=clients.find(c=>c.id===clientId);if(!client)return;client.name=document.getElementById('editClientName').value.trim();client.phone=document.getElementById('editClientPhone').value.trim();client.disbursementDate=document.getElementById('editClientDisbursementDate').value;client.frequency=document.getElementById('editClientFrequency').value;client.quota=parseFloat(document.getElementById('editClientQuota').value);client.term=parseInt(document.getElementById('editClientTerm').value);saveData();updateDisplay();closeModal('editClientModal');alert('Cliente actualizado exitosamente');}
 function quickPayment(clientId){const client=clients.find(c=>c.id===clientId);if(!client)return;const date=document.getElementById('dateFilter').value;document.getElementById('clientSearchModal').value=client.name;document.getElementById('selectedClientId').value=client.id;document.getElementById('paymentAmount').value=client.quota||'';document.getElementById('paymentMethod').value='efectivo';document.getElementById('paymentNote').value='Pago rápido';showModal('addPaymentModal');}
+function installPWA(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then((choiceResult)=>{if(choiceResult.outcome==='accepted'){console.log('PWA instalada');}deferredPrompt=null;document.getElementById('installBanner').classList.remove('show');});}}
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/service-worker.js').then(function(registration){console.log('ServiceWorker registrado con éxito:',registration.scope);},function(err){console.log('ServiceWorker falló al registrar:',err);});});}
+const urlParams=new URLSearchParams(window.location.search);const action=urlParams.get('action');if(action==='add-client'){setTimeout(()=>showAddClientModal(),500);}else if(action==='add-payment'){setTimeout(()=>showAddPaymentModal(),500);}
+window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();deferredPrompt=e;setTimeout(()=>{if(!localStorage.getItem('pwaInstallPromptShown')){document.getElementById('installBanner').classList.add('show');localStorage.setItem('pwaInstallPromptShown','true');}},2000);});
 init();
 </script>
 </body>
