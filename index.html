@@ -361,11 +361,6 @@ function deleteAllClients(){
         return;
     }
     
-    // Segunda confirmación para mayor seguridad
-    if(!confirm('⚠️ ÚLTIMA CONFIRMACIÓN:\n\n¿Realmente deseas eliminar TODOS los clientes?\n\nEsta acción no se puede deshacer.')){
-        return;
-    }
-    
     // Eliminar todos los clientes
     clients = [];
     
