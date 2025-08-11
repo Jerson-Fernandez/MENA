@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Sistema de Pagos Andreli</title>
-    <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Pagos Andreli">
@@ -361,6 +360,8 @@
             border-radius: var(--border-radius);
             animation: slideIn 0.3s ease-out;
             margin: auto;
+            max-height: 90vh;
+            overflow-y: auto;
         }
         @keyframes slideIn {
             from { transform: translateY(-30px) scale(0.95); opacity: 0; }
@@ -440,13 +441,15 @@
 
         /* --- DETALLES DE CLIENTE MODAL --- */
         #clientDetailsModal .modal-content {
-            max-height: 85vh;
+            max-height: 90vh;
+            overflow-y: auto;
         }
         .client-detail-info {
             padding: 15px;
             border-radius: 8px;
             border: 1px solid var(--medium-gray);
             margin-bottom: 20px;
+            background-color: var(--white);
         }
         .detail-row {
             display: flex;
@@ -473,6 +476,7 @@
             margin-top: 20px;
             padding-top: 20px;
             border-top: 1px solid #e9ecef;
+            padding-bottom: 10px;
         }
         .btn-action {
             padding: 10px;
@@ -995,6 +999,7 @@ init();
 </script>
 </body>
 </html>
+
 
 
 
